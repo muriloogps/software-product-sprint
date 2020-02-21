@@ -26,3 +26,26 @@ function addRandomGreeting() {
   const greetingContainer = document.getElementById('greeting-container');
   greetingContainer.innerText = greeting;
 }
+
+function displayHobbies() {
+    const title = document.getElementById('title');
+    title.innerText = "This is a list of my main hobbies:";
+    $(function(){
+        $("#panel").load("main_page_clickables/hobbies.html"); 
+    });
+}
+
+function displayAbout() {
+    const title = document.getElementById('title');
+    title.innerText = "Here is some background information about me:";
+    $(function(){
+        $("#panel").load("main_page_clickables/aboutme.html"); 
+    });
+}
+
+function activateListItem() {
+    $('#hobbiesList a').on('click', function (e) {
+        e.preventDefault()
+        $(this).tab('show')
+    });
+}
