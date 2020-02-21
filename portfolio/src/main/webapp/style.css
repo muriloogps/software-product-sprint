@@ -4,6 +4,18 @@
   width: 650px;
 }
 
-#greeting-container {
-  margin-top: 20px;
+#content-title {
+    margin-top: 20px;
+}
+
+#content-panel {
+    margin-top: 10px;
+}
+
+.tabbed-paragraph {
+    text-indent: 30px;
+}
+
+.bottom-paragraph {
+    margin-bottom: 20px;
 }

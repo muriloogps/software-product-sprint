@@ -28,24 +28,26 @@ function addRandomGreeting() {
 }
 
 function displayHobbies() {
-    const title = document.getElementById('title');
+    const title = document.getElementById('content-title');
     title.innerText = "This is a list of my main hobbies:";
     $(function(){
-        $("#panel").load("main_page_clickables/hobbies.html"); 
+        $("#content-panel").load("main_page_clickables/hobbies.html"); 
     });
 }
 
 function displayAbout() {
-    const title = document.getElementById('title');
+    const title = document.getElementById('content-title');
     title.innerText = "Here is some background information about me:";
     $(function(){
-        $("#panel").load("main_page_clickables/aboutme.html"); 
+        $("#content-panel").load("main_page_clickables/aboutme.html"); 
     });
 }
 
 function activateListItem() {
-    $('#hobbiesList a').on('click', function (e) {
-        e.preventDefault()
-        $(this).tab('show')
-    });
+    $(document).ready(function() { 
+            $('li').click(function() { 
+                $('li.list-group-item.active').removeClass("active"); 
+                $(this).addClass("active"); 
+            }); 
+        });
 }
