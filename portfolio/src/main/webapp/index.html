@@ -2,17 +2,51 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>My Portfolio</title>
-    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Murilo Silva</title>
+
+    <!-- ADD BOOTSTRAP -->
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <!-- END BOOTSTRAP -->
+
+    <link rel="stylesheet" href="style.css"> 
     <script src="script.js"></script>
   </head>
-  <body>
-    <div id="content">
-      <h1>My Portfolio</h1>
-      <p>This is my portfolio.</p>
-      <p>Click here to get a random message:</p>
-      <button onclick="addRandomGreeting()">Hello</button>
-      <div id="greeting-container"></div>
+
+  <body class="bg-dark">
+
+    <div class="container">
+        <!-- Need to fix the navbar display - not working for some reason -->
+        <!-- <br>
+        <nav class="navbar navbar-light bg-light">
+            <a class="navbar-brand">Navbar</a>
+            <form class="form-inline">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        </nav> -->
+
+        <h1>Hello, everyone!</h1>
+        <h3>Welcome to my personal portfolio.</h3>
+        <p>Here I hope that you will gain some insights about my technical work, hobbies, ambitions, favorite movies, and so on.
+            <br>
+            Anyways, are you ready to get started? To do so, you can navigate on the menu bar at the top of this page.
+        </p>
+
+        <img src="images/Chicago.jpg" alt="Chicago"/>
+        <p>This is me trying to look cool in Chicago</p>
+
+        <button type="button" class="btn btn-primary" onclick="displayAbout()">About me</button>
+        <button type="button" class="btn btn-primary" onclick="displayHobbies()">Hobbies</button>
+        <br><br>
+        <b><p id="title"></p></b>
+        <div id="panel"></div>
     </div>
   </body>
 </html>
