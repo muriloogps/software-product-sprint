@@ -43,6 +43,42 @@ function displayAbout() {
     });
 }
 
+function displayGame() {
+    const title = document.getElementById('content-title');
+    title.innerHTML = "Let's play a fun game (well, at least I find it fun <i class=\"em em-smile\" aria-role=\"funny\" aria-label=\"Smile\"></i>)";
+    $(function(){
+        $("#content-panel").load("main_page_clickables/game.html"); 
+    });   
+}
+
+function displayCountry() {
+    console.log("Getting the country name country");
+
+    const responsePromise = fetch('/data');
+
+    responsePromise.then(handleResponse);
+}
+
+function handleResponse(response) {
+  console.log('Handling the country response.');
+
+  // response.text() returns a Promise, because the response is a stream of
+  // content and not a simple variable.
+  const textPromise1 = response.text();
+  console.log(textPromise1);
+//   const textPromise2 = response[b].text(); 
+//   console.log(textPromise2);
+
+  textPromise1.then(addCountry);
+}
+
+function addCountry(country) {
+  console.log('Country added: ' + country);
+
+  const countryName = document.getElementById('country-name');
+  countryName.innerText = country;
+}
+
 function activateListItem() {
     $(document).ready(function() { 
             $('li').click(function() { 
@@ -51,3 +87,4 @@ function activateListItem() {
             }); 
         });
 }
+

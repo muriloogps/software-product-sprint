@@ -14,6 +14,8 @@
 
 package com.google.sps.servlets;
 
+import java.util.*;
+import java.io.*;
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -23,10 +25,130 @@ import javax.servlet.http.HttpServletResponse;
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
+    private List<String> countries;
+    private List<String> capitals;
 
-  @Override
-  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    response.setContentType("text/html;");
-    response.getWriter().println("<h1>Hello Murilo!</h1>");
-  }
+    @Override
+    public void init() {
+        countries = new ArrayList();
+        countries.add("Germany");
+        countries.add("Brazil");
+        countries.add("United States");
+        countries.add("France");
+        countries.add("Canada");
+        countries.add("Russia");
+        countries.add("China");
+        countries.add("Australia");
+        countries.add("Venezuela");
+        countries.add("India");
+        countries.add("Switzerland");
+        countries.add("Nigeria");
+        countries.add("Panama");
+        countries.add("Jamaica");
+        countries.add("South Africa (any one of the 3 capitals)");
+        countries.add("Italy");
+        countries.add("Mexico");
+        countries.add("Argentina");
+        countries.add("Colombia");
+        countries.add("Turkey");
+        
+        capitals = new ArrayList();
+        capitals.add("Berlin");
+        capitals.add("Brasilia");
+        capitals.add("Washington");
+        capitals.add("Paris");
+        capitals.add("Ottawa");
+        capitals.add("Moscow");
+        capitals.add("Beijing");
+        capitals.add("Canberra (yeah, I know...)");
+        capitals.add("Caracas");
+        capitals.add("New Delhi");
+        capitals.add("Bern");
+        capitals.add("Abuja");
+        capitals.add("Panama City");
+        capitals.add("Kingston");
+        capitals.add("Bloemfontein, Cape Town, Pretoria");
+        capitals.add("Rome");
+        capitals.add("Mexico City");
+        capitals.add("Buenos Aires");
+        capitals.add("Bogota");
+        capitals.add("Ankara");
+    }
+
+    @Override
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        // response.setContentType("text/html;");
+        // response.getWriter().println("<h1>Hello Murilo!</h1>");
+        //String[] pair = new String[2];
+        //response[0] = countries.get(4);
+        //response[1] = capitals.get(4);
+        Random rand = new Random();
+
+        response.setContentType("text/html;");
+        response.getWriter().println(countries.get(rand.nextInt(20)));
+    }
+
 }
+
+// @WebServlet("/country")
+// class Country extends HttpServlet {
+
+//     public String[] doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+//         ArrayList<String> countries = populateCountries();
+//         ArrayList<String> capitals = populateCapitals();
+//         String[] response = new String[2];
+//         response[0] = countries.get(4);
+//         response[1] = capitals.get(4);
+//         return response;
+//     }
+
+//     public ArrayList populateCountries() {
+//         ArrayList<String> countries = new ArrayList();
+//         countries.add("Germany");
+//         countries.add("Brazil");
+//         countries.add("United States");
+//         countries.add("France");
+//         countries.add("Canada");
+//         countries.add("Russia");
+//         countries.add("China");
+//         countries.add("Australia");
+//         countries.add("Venezuela");
+//         countries.add("India");
+//         countries.add("Switzerland");
+//         countries.add("Nigeria");
+//         countries.add("Panama");
+//         countries.add("Jamaica");
+//         countries.add("South Africa (any one of the 3 capitals)");
+//         countries.add("Italy");
+//         countries.add("Mexico");
+//         countries.add("Argentina");
+//         countries.add("Colombia");
+//         countries.add("Turkey");
+//         return countries;
+//     }
+
+//     public ArrayList populateCapitals() {
+//         ArrayList<String> capitals = new ArrayList();
+//         countries.add("Berlin");
+//         countries.add("Brasilia");
+//         countries.add("Washington");
+//         countries.add("Paris");
+//         countries.add("Ottawa");
+//         countries.add("Moscow");
+//         countries.add("Beijing");
+//         countries.add("Canberra (yeah, I know...)");
+//         countries.add("Caracas");
+//         countries.add("New Delhi");
+//         countries.add("Bern");
+//         countries.add("Abuja");
+//         countries.add("Panama City");
+//         countries.add("Kingston");
+//         countries.add("Bloemfontein, Cape Town, Pretoria");
+//         countries.add("Rome");
+//         countries.add("Mexico City");
+//         countries.add("Buenos Aires");
+//         countries.add("Bogota");
+//         countries.add("Ankara");
+//         return capitals;
+//     }
+// }

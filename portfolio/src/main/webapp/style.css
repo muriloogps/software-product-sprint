@@ -19,3 +19,8 @@
 .bottom-paragraph {
     margin-bottom: 20px;
 }
+
+.top-bottom-margin {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
