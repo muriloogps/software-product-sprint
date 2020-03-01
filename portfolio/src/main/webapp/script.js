@@ -54,7 +54,7 @@ function displayGame() {
 function displayCountry() {
     console.log("Getting the country name country");
 
-    const responsePromise = fetch('/data');
+    const responsePromise = fetch('/country');
 
     responsePromise.then(handleResponse);
 }
