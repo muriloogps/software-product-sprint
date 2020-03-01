@@ -59,6 +59,31 @@ function displayCountry() {
     responsePromise.then(handleResponse);
 }
 
+function getComments() {
+    fetch('/data').then(response => response.json()).then((comments) => {
+        // comments is an object, not a string, so we have to
+        // reference its fields to create HTML content
+
+        console.log(comments);
+        const title = document.getElementById('content-title');
+        const content = document.getElementById('content-panel');
+
+        //Is setting this to empty a good practice standard?
+        title.innerHTML = '';
+        title.innerText = 'message 1:';
+
+        content.innerHTML = '';
+        content.innerText = comments['messages'][0];
+
+        //Question: what's the use of appendChild() ?
+
+        // const statsListElement = document.getElementById('server-stats-container');
+        // statsListElement.innerHTML = '';
+        // statsListElement.appendChild(
+        //     createListElement('Start time: ' + stats.startTime));
+    });
+}
+
 function handleResponse(response) {
   console.log('Handling the country response.');
 

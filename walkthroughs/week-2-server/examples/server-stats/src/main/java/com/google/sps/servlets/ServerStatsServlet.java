@@ -39,9 +39,12 @@ public final class ServerStatsServlet extends HttpServlet {
     ServerStats serverStats = new ServerStats(startTime, currentTime, maxMemory, usedMemory);
     String json = convertToJson(serverStats);
 
+    // Convert the server stats to JSON with Gson
+    String json2 = convertToJsonUsingGson(serverStats);
+
     // Send the JSON as the response
     response.setContentType("application/json;");
-    response.getWriter().println(json);
+    response.getWriter().println(json2);
   }
 
   /**
