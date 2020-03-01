@@ -25,54 +25,17 @@ import javax.servlet.http.HttpServletResponse;
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
-    private List<String> countries;
-    private List<String> capitals;
+    private final List<Country> countries = new ArrayList();
 
     @Override
     public void init() {
-        countries = new ArrayList();
-        countries.add("Germany");
-        countries.add("Brazil");
-        countries.add("United States");
-        countries.add("France");
-        countries.add("Canada");
-        countries.add("Russia");
-        countries.add("China");
-        countries.add("Australia");
-        countries.add("Venezuela");
-        countries.add("India");
-        countries.add("Switzerland");
-        countries.add("Nigeria");
-        countries.add("Panama");
-        countries.add("Jamaica");
-        countries.add("South Africa (any one of the 3 capitals)");
-        countries.add("Italy");
-        countries.add("Mexico");
-        countries.add("Argentina");
-        countries.add("Colombia");
-        countries.add("Turkey");
-        
-        capitals = new ArrayList();
-        capitals.add("Berlin");
-        capitals.add("Brasilia");
-        capitals.add("Washington");
-        capitals.add("Paris");
-        capitals.add("Ottawa");
-        capitals.add("Moscow");
-        capitals.add("Beijing");
-        capitals.add("Canberra (yeah, I know...)");
-        capitals.add("Caracas");
-        capitals.add("New Delhi");
-        capitals.add("Bern");
-        capitals.add("Abuja");
-        capitals.add("Panama City");
-        capitals.add("Kingston");
-        capitals.add("Bloemfontein, Cape Town, Pretoria");
-        capitals.add("Rome");
-        capitals.add("Mexico City");
-        capitals.add("Buenos Aires");
-        capitals.add("Bogota");
-        capitals.add("Ankara");
+        countries.add(new Country("Germany", "Berlin"));
+        countries.add(new Country("Brazil", "Brasilia"));
+        countries.add(new Country("United States", "Washington"));
+        countries.add(new Country("France", "Paris"));
+        countries.add(new Country("Canada", "Ottawa"));
+        countries.add(new Country("Russia", "Moscow"));
+        countries.add(new Country("South Africa (any one of the 3 capitals)", "Bloemfontein, Cape Town, Pretoria"));
     }
 
     @Override
@@ -85,7 +48,7 @@ public class DataServlet extends HttpServlet {
         Random rand = new Random();
 
         response.setContentType("text/html;");
-        response.getWriter().println(countries.get(rand.nextInt(20)));
+        response.getWriter().println(countries.get(rand.nextInt(countries.size())));
     }
 
 }
