@@ -22,27 +22,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
 
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
-    private final List<Country> countries = new ArrayList();
     private final List<String> hardCodedJson = new ArrayList();
+    private final List<Comment> comments = new ArrayList();
 
     @Override
     public void init() {
-        countryInit();
         jsonInit();
-    }
-
-    public void countryInit() {
-        countries.add(new Country("Germany", "Berlin"));
-        countries.add(new Country("Brazil", "Brasilia"));
-        countries.add(new Country("United States", "Washington"));
-        countries.add(new Country("France", "Paris"));
-        countries.add(new Country("Canada", "Ottawa"));
-        countries.add(new Country("Russia", "Moscow"));
-        countries.add(new Country("South Africa (any one of the 3 capitals)", "Bloemfontein, Cape Town, Pretoria"));
     }
 
     public void jsonInit() {
@@ -75,27 +67,42 @@ public class DataServlet extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        // response.setContentType("text/html;");
-        // response.getWriter().println("<h1>Hello Murilo!</h1>");
-        //String[] pair = new String[2];
-        //response[0] = countries.get(4);
-        //response[1] = capitals.get(4);
-        Random rand = new Random();
-
-        // response.setContentType("text/html;");
-        // response.getWriter().println(countries.get(rand.nextInt(countries.size())));
-        String json3 = "{";
-        json3 += "\"gender\": ";
-        json3 += "\"" + "Male" + "\"";
-        json3 += ", ";
-        json3 += "\"height\": ";
-        json3 += "\"" + "1.75" + "\"";
-        json3 += "}";
-
-        String json = convertArrayListToJson(hardCodedJson);
-        // String json = convertToJsonUsingGson(hardCodedJson);
+        // String json = convertArrayListToJson(hardCodedJson);
+        String json = convertToJsonUsingGson(comments);
         response.setContentType("application/json;");
         response.getWriter().println(json);
+    }
+
+    @Override
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        // Get the input from the form.
+        String name = getParameter(request, "name", "");
+        String text = getParameter(request, "comment", "");
+
+        Entity commentEntity = new Entity("Comment");
+        commentEntity.setProperty("name", name);
+        commentEntity.setProperty("text", text);
+
+        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+        datastore.put(commentEntity);
+        
+        Comment comment = new Comment(name, text);
+        comments.add(comment);
+
+        String json = convertToJsonUsingGson(comments);
+
+        // Respond with the result.
+        // response.setContentType("text/html;");
+        response.setContentType("application/json;");
+        response.getWriter().println(json);
+    }
+
+    private String getParameter(HttpServletRequest request, String name, String defaultValue) {
+        String value = request.getParameter(name);
+        if (value == null) {
+            return defaultValue;
+        }
+        return value;
     }
 
     public String convertArrayListToJson(List<String> list) {
@@ -119,73 +126,10 @@ public class DataServlet extends HttpServlet {
         return json;
     }
 
-    // private String convertToJsonUsingGson(List<String> list) {
-    //     Gson gson = new Gson();
-    //     String json = gson.toJson(list);
-    //     return json;
-    // }
+    private String convertToJsonUsingGson(List<Comment> list) {
+        Gson gson = new Gson();
+        String json = gson.toJson(comments);
+        return json;
+    }
 
 }
-
-// @WebServlet("/country")
-// class Country extends HttpServlet {
-
-//     public String[] doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-//         ArrayList<String> countries = populateCountries();
-//         ArrayList<String> capitals = populateCapitals();
-//         String[] response = new String[2];
-//         response[0] = countries.get(4);
-//         response[1] = capitals.get(4);
-//         return response;
-//     }
-
-//     public ArrayList populateCountries() {
-//         ArrayList<String> countries = new ArrayList();
-//         countries.add("Germany");
-//         countries.add("Brazil");
-//         countries.add("United States");
-//         countries.add("France");
-//         countries.add("Canada");
-//         countries.add("Russia");
-//         countries.add("China");
-//         countries.add("Australia");
-//         countries.add("Venezuela");
-//         countries.add("India");
-//         countries.add("Switzerland");
-//         countries.add("Nigeria");
-//         countries.add("Panama");
-//         countries.add("Jamaica");
-//         countries.add("South Africa (any one of the 3 capitals)");
-//         countries.add("Italy");
-//         countries.add("Mexico");
-//         countries.add("Argentina");
-//         countries.add("Colombia");
-//         countries.add("Turkey");
-//         return countries;
-//     }
-
-//     public ArrayList populateCapitals() {
-//         ArrayList<String> capitals = new ArrayList();
-//         countries.add("Berlin");
-//         countries.add("Brasilia");
-//         countries.add("Washington");
-//         countries.add("Paris");
-//         countries.add("Ottawa");
-//         countries.add("Moscow");
-//         countries.add("Beijing");
-//         countries.add("Canberra (yeah, I know...)");
-//         countries.add("Caracas");
-//         countries.add("New Delhi");
-//         countries.add("Bern");
-//         countries.add("Abuja");
-//         countries.add("Panama City");
-//         countries.add("Kingston");
-//         countries.add("Bloemfontein, Cape Town, Pretoria");
-//         countries.add("Rome");
-//         countries.add("Mexico City");
-//         countries.add("Buenos Aires");
-//         countries.add("Bogota");
-//         countries.add("Ankara");
-//         return capitals;
-//     }
-// }

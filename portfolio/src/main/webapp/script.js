@@ -59,6 +59,35 @@ function displayCountry() {
     responsePromise.then(handleResponse);
 }
 
+function handleResponse(response) {
+  console.log('Handling the country response.');
+
+  // response.text() returns a Promise, because the response is a stream of
+  // content and not a simple variable.
+  const textPromise1 = response.text();
+  console.log(textPromise1);
+//   const textPromise2 = response[b].text(); 
+//   console.log(textPromise2);
+
+  textPromise1.then(addCountry);
+}
+
+function addCountry(country) {
+  console.log('Country added: ' + country);
+
+  const countryName = document.getElementById('country-name');
+  countryName.innerText = country;
+}
+
+function displayComments() {
+    const title = document.getElementById('content-title');
+    title.innerHTML = "Do you have any feedback on my website? Please feel free to leave a comment.";
+    $(function(){
+        $("#content-panel").load("main_page_clickables/comment-form.html"); 
+    });   
+    
+}
+
 function getComments() {
     fetch('/data').then(response => response.json()).then((comments) => {
         // comments is an object, not a string, so we have to
@@ -82,26 +111,6 @@ function getComments() {
         // statsListElement.appendChild(
         //     createListElement('Start time: ' + stats.startTime));
     });
-}
-
-function handleResponse(response) {
-  console.log('Handling the country response.');
-
-  // response.text() returns a Promise, because the response is a stream of
-  // content and not a simple variable.
-  const textPromise1 = response.text();
-  console.log(textPromise1);
-//   const textPromise2 = response[b].text(); 
-//   console.log(textPromise2);
-
-  textPromise1.then(addCountry);
-}
-
-function addCountry(country) {
-  console.log('Country added: ' + country);
-
-  const countryName = document.getElementById('country-name');
-  countryName.innerText = country;
 }
 
 function activateListItem() {
