@@ -27,6 +27,18 @@ function addRandomGreeting() {
   greetingContainer.innerText = greeting;
 }
 
+function createMap() {
+    var map;
+    map = new google.maps.Map(document.getElementById('map'), {
+    center: {lat: 40.423, lng: -86.921},
+    zoom: 16
+    });
+    // const map = new google.maps.Map(
+    //   document.getElementById('map'),
+    //   {center: {lat: 25.338, lng: -86.921195}, zoom: 16});
+}
+
+
 function displayHobbies() {
     const title = document.getElementById('content-title');
     title.innerText = "This is a list of my main hobbies:";
