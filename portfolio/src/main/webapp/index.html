@@ -6,6 +6,10 @@
 
     <title>Murilo Silva</title>
 
+    <!-- Fixes favicon.ico error -->
+    <link rel="shortcut icon" href="">
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBv7O45aUH5YEHh5qaNNd-_PSssUnvxW4M"></script>
+
     <!-- ADD BOOTSTRAP -->
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -21,7 +25,7 @@
     <link href="https://emoji-css.afeld.me/emoji.css" rel="stylesheet">
   </head>
 
-  <body class="bg-dark">
+  <body onload="createMap();" class="bg-dark">
 
     <div class="container">
         <!-- Need to fix the navbar display - not working for some reason -->
@@ -43,6 +47,9 @@
 
         <img src="images/Chicago.jpg" alt="Chicago"/>
         <p>This is me trying to look cool in Chicago</p>
+
+        <h3>This is where my university is located at!</h3>
+        <div id="map"></div>
 
         <section id="dynamic-content"> 
             <button type="button" class="btn btn-primary" onclick="displayAbout()">About me</button>
