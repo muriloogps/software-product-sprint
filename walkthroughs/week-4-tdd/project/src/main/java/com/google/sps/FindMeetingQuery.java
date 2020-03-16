@@ -33,24 +33,24 @@ public final class FindMeetingQuery {
 
         int differentAttendees = 1;
 
-        Arrays.asList(TimeRange.fromStartEnd(TimeRange.START_OF_DAY, TimeRange.END_OF_DAY, true));
+        List<TimeRange> available = Arrays.asList(TimeRange.fromStartEnd(TimeRange.START_OF_DAY, TimeRange.END_OF_DAY, true));
         // Arrays.asList(TimeRange.fromStartEnd(TimeRange.START_OF_DAY, TIME_0800AM, false),
         //     TimeRange.fromStartEnd(TIME_0830AM, TIME_0900AM, false),
         //     TimeRange.fromStartEnd(TIME_0930AM, TimeRange.END_OF_DAY, true));
         for (Event event : events) {
             if (attendeesOverlap(event.getAttendees(), request.getAttendees())) {
+                available = remove(available, event.getWhen());
                 differentAttendees = 0;
-                break;
             }
         }
 
         if (differentAttendees == 1) {
             return Arrays.asList(TimeRange.WHOLE_DAY);
         }
-        return null;
+        return available;
     }
 
-    public Collection<TimeRange> remove(Collection<TimeRange> collectionRanges, TimeRange rangeToRemove) {
+    public List<TimeRange> remove(Collection<TimeRange> collectionRanges, TimeRange rangeToRemove) {
         int index = -1;
         ArrayList<TimeRange> ranges = new ArrayList<>(collectionRanges);
         for (TimeRange range : ranges) {
@@ -75,21 +75,26 @@ public final class FindMeetingQuery {
                 continue;
             }
 
-            //Case 3: range ends after but starts while rangeToRemove is happening
+            // Case 3: range ends after but starts while rangeToRemove is happening
             //   |--------|       range
             // |------|           rangeToRemove
             if (range.start() >= rangeToRemove.start() && range.start() <= rangeToRemove.end() && range.end() > rangeToRemove.end()) {
-                TimeRange newRange = TimeRange.fromStartEnd(rangeToRemove.end()+1, range.end(), true);
+                TimeRange newRange = TimeRange.fromStartEnd(rangeToRemove.end(), range.end(), false);
                 ranges.set(index, newRange);
                 continue;
             }
 
-            //Case 4: range fully covers rangeToRemove
+            // Case 4: range fully covers rangeToRemove
             // |---------|       range
             //   |----|          rangeToRemove
             if (range.start() < rangeToRemove.start() && range.end() > rangeToRemove.end()) {
                 TimeRange leftRange = TimeRange.fromStartEnd(range.start(), rangeToRemove.start(), false);
-                TimeRange rightRange = TimeRange.fromStartEnd(rangeToRemove.end()+1, range.end(), true);
+                TimeRange rightRange;
+                if (range.end() >= TimeRange.END_OF_DAY) {
+                   rightRange = TimeRange.fromStartEnd(rangeToRemove.end(), TimeRange.END_OF_DAY, true);
+                } else {
+                    rightRange = TimeRange.fromStartEnd(rangeToRemove.end(), range.end(), true);
+                }
                 ranges.set(index, leftRange);
                 ranges.add(index+1, rightRange);
                 break;
