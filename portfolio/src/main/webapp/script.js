@@ -28,8 +28,7 @@ function addRandomGreeting() {
 }
 
 function createMap() {
-    var map;
-    map = new google.maps.Map(document.getElementById('map'), {
+    var map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: 40.423, lng: -86.921},
     zoom: 16
     });
@@ -74,30 +73,53 @@ function displayCountry() {
 function handleResponse(response) {
   console.log('Handling the country response.');
 
-  // response.text() returns a Promise, because the response is a stream of
-  // content and not a simple variable.
-  const textPromise1 = response.text();
-  console.log(textPromise1);
-//   const textPromise2 = response[b].text(); 
-//   console.log(textPromise2);
+    // response.text() returns a Promise, because the response is a stream of
+    // content and not a simple variable.
+    // const textPromise = response.text();
+    const textPromise = response.json();
+    // console.log(textPromise);
+    // console.log(textPromise[0]);
 
-  textPromise1.then(addCountry);
+    textPromise.then(countryGame);
 }
 
-function addCountry(country) {
-  console.log('Country added: ' + country);
+function countryGame(country) {
+    var round = 1;
+    var score = 0;
+    const scoreHTML = document.getElementById('country-score');
+    
+    //while (round <= 10) {
+        document.getElementById('correct-country-btn').onclick = function() {
+            round++;
+            score++;
+            break;
+        }
+        document.getElementById('incorrect-country-btn').onclick = function() {
+            round++;
+            break;
+        }
+    //}
+    
+    scoreHTML.innerText = score + '/10';
+    console.log(score);
+    console.log("hehhahaha");
+    console.log(round);
 
-  const countryName = document.getElementById('country-name');
-  countryName.innerText = country;
+    console.log('Country added: ' + country);
+    console.log(country[0].countryName);
+
+    const countryName = document.getElementById('country-name');
+    countryName.innerText = country;
 }
+
 
 function displayComments() {
     const title = document.getElementById('content-title');
     title.innerHTML = "Do you have any feedback on my website? Please feel free to leave a comment.";
     $(function(){
         $("#content-panel").load("main_page_clickables/comment-form.html"); 
-    });   
-    
+    });
+
 }
 
 function getComments() {

@@ -244,7 +244,6 @@ public final class FindMeetingQueryTest {
 
     Collection<TimeRange> actual = query.query(NO_EVENTS, request);
     Collection<TimeRange> expected = Arrays.asList(TimeRange.WHOLE_DAY);
-
     Assert.assertEquals(expected, actual);
   }
 }
